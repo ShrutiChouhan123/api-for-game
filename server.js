@@ -12,6 +12,11 @@ app.post("/signup", AuthController.signup);
 
 app.post("/login", AuthController.login);
 
+app.post("/logout", (req, res) => {
+  console.log('logout success')
+  res.status(200).json({ message: "Logout successful" });
+});
+
 app.get("/protected", AuthController.authenticateToken, (req, res) => {
   res.json({
     message: "Protected route. You are authenticated.",
@@ -22,3 +27,6 @@ app.get("/protected", AuthController.authenticateToken, (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+
+

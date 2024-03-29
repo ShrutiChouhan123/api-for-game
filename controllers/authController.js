@@ -31,7 +31,6 @@ class AuthController {
     const token = jwt.sign({ email: user.email }, "your-secret-key");
 
     res.status(200).json({ message: "Login successful", token });
-    res.redirect(307, '/Game');
     console.log("login success");
   }
 
