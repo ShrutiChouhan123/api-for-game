@@ -1,16 +1,23 @@
-const express = require('express');
-const cors = require('cors');
-const authController = require('./controllers/authController');
+const express = require("express");
+const cors = require("cors");
+const AuthController = require("./controllers/authController");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Enable CORS for all origins
 app.use(cors());
-
 app.use(express.json());
 
-app.post('/login', authController.login);
+app.post("/signup", AuthController.signup);
+
+app.post("/login", AuthController.login);
+
+app.get("/protected", AuthController.authenticateToken, (req, res) => {
+  res.json({
+    message: "Protected route. You are authenticated.",
+    user: req.user,
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
