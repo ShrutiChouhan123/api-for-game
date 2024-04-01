@@ -6,7 +6,7 @@ const verifyToken = (req, res, next) => {
   const token = authHeader && authHeader.split(" ")[1];
   if (!token) return res.status(401).json({ message: "Token not provided" });
   try {
-    const decoded = jwt.verify(token, "your-secret-key");
+    const decoded = jwt.verify(token, apiKey);
     req.user = decoded;
     next();
   } catch (error) {
