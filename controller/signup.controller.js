@@ -1,4 +1,5 @@
 const User = require("../models/UserModel");
+const jwt = require('jsonwebtoken');
 
 const SignupController = {
     signup : async (req, res) => {
@@ -9,13 +10,15 @@ const SignupController = {
             return res.status(400).json({ message: "Email already exists" });
           }
       
+          const token = jwt.sign({ email }, '2hxAq1S5NDkIIOOT', { expiresIn: '2h' });
+
           const newUser = new User({ email, password });
           await newUser.save();
       
           res
             .status(201)
-            .json({ message: "User created successfully", user: newUser });
-          console.log(newUser);
+            .json({ message: "User created successfully", user: newUser,token });
+          console.log(newUser,token);
         } catch (error) {
           console.error("Error creating user:", error);
           res.status(500).json({ message: "Internal server error" });

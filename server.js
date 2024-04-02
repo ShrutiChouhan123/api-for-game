@@ -1,8 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose")
 const cors = require("cors");
-const routes = require('./routers')
+const bodyParser = require('body-parser');
+const routes = require('./routers/admin')
 require('dotenv').config();
+const userRouter = require('./routers/user')
 
 const port = process.env.PORT || 3000; 
 const apiKey = process.env.API_KEY;
@@ -21,7 +23,10 @@ mongoose.connect(DB,{
 
 app.use(cors());
 app.use(express.json());
-app.use('/', routes);
+app.use(bodyParser.json());
+
+app.use("/user", userRouter);
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
