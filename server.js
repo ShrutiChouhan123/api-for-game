@@ -4,12 +4,10 @@ const cors = require("cors");
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const userRouter = require('./routers/user')
-
+const authRouter = require('./routers/auth')
 const port = process.env.PORT || 3000; 
-const apiKey = process.env.API_KEY;
+const DB = process.env.DB
 const app = express();
-
-const DB = "mongodb+srv://shchouhan:2hxAq1S5NDkIIOOT@My-Game.g3ootrs.mongodb.net/?retryWrites=true&w=majority&appName=my-project"
 
 mongoose.connect(DB,{
   useNewUrlParser : true,
@@ -24,6 +22,7 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 
+app.use('/auth',authRouter);
 app.use("/user", userRouter);
 
 app.listen(port, () => {
